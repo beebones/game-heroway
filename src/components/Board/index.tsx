@@ -6,10 +6,12 @@ import Demon from '../Demon';
 import Chest from '../Chest';
 import Trap from '../Trap';
 
+
 const Board = () => {
   return (
     <div>
-      <MiniDemon />
+      <MiniDemon initialPosition={{ x: 5, y:5 }}/>
+      <MiniDemon initialPosition={{ x: 10, y:10 }}/>
       <Demon />
       <Hero />
       <Chest />

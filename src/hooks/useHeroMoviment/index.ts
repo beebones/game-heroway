@@ -10,20 +10,13 @@ function useHeroMoviment(initialPosition) {
   useEventListener('keydown', (event: React.KeyboardEvent<HTMLDivElement>) => {
     const direction = event.key as EDirection;
 
+    if(direction.indexOf('Arrow') === -1) {
+      return;
+    }
+
     const nextPosition = handleNextPosition(direction, positionState);
     updatePositionState(nextPosition);
     updateDirectionState(direction);
-    // if (event.key === 'ArrowLeft') {
-    //   updatePositionState({ x: positionState.x -1, y: positionState.y });
-    //   updateDirectionState('LEFT');
-    // } else if (event.key === 'ArrowRight') {
-    //   updatePositionState({ x: positionState.x +1, y: positionState.y });
-    //   updateDirectionState('RIGHT');
-    // } else if (event.key === 'ArrowDown') {
-    //   updatePositionState({ x: positionState.x, y: positionState.y -1 });
-    // } else if (event.key === 'ArrowUp') {
-    //   updatePositionState({ x: positionState.x, y: positionState.y +1 });
-    // }
   });
 
   return {
