@@ -1,4 +1,4 @@
-import { EDirection } from "../../settings/constants";
+import { EDirection, EWalker } from "../../settings/constants";
 import React from "react";
 
 export function handleNextPosition(direction, position) {
@@ -57,22 +57,38 @@ export const canvas = [
   [WL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, WL],
   [WL, FL, FL, FL, FL, TR, FL, FL, FL, FL, FL, FL, MD, FL, FL, FL, FL, FL, FL, WL],
   [WL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, WL],
-  [WL, HE, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, WL],
+  [WL, HE, WL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, WL],
   [WL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, FL, WL],
   [WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL]
 ];
 
-export function checkValidMoviment(nextPosition) {
+export function checkValidMoviment(nextPosition, walker) {
   const canvasValue = canvas[nextPosition.y][nextPosition.x];
 
-  if(canvasValue === ECanvas.WALL) {
-    return false;
+
+  // if(walker === EWalker.HERO) {
+  //   getHeroValidMoves(canvasValue);
+  // } else {
+  //   getEnemyValidMoves(canvasValue);
+  // }
+  const result = walker === EWalker.HERO ? getHeroValidMoves(canvasValue) : getEnemyValidMoves(canvasValue);
+  return result;
+}
+
+function getHeroValidMoves(canvasValue) {
+  return {
+    valid: canvasValue === ECanvas.FLOOR || canvasValue === ECanvas.TRAP || canvasValue === ECanvas.CHEST || canvasValue === ECanvas.MINI_DEMON || canvasValue === ECanvas.DEMON,
+    dead: canvasValue === ECanvas.TRAP || canvasValue === ECanvas.MINI_DEMON || canvasValue === ECanvas.DEMON,
+    chest: canvasValue === ECanvas.CHEST,
+    door: canvasValue === ECanvas.DOOR,
   }
-  if(canvasValue === ECanvas.CHEST) {
-    console.log('PISOU NO BAU');
+}
+
+function getEnemyValidMoves(canvasValue) {
+  return {
+    valid: canvasValue === ECanvas.FLOOR || canvasValue === ECanvas.HERO,
+    dead: false,
+    chest: false,
+    door: false,
   }
-  if(canvasValue === ECanvas.TRAP) {
-    console.log('PISOU NA TRAP');
-  }
-  return true;
 }
