@@ -1,6 +1,6 @@
 import React from 'react';
 import CanvasProvider from '../contexts/canvas';
-import Debugger from './Debugger';
+// import Debugger from './Debugger';
 import Board from './Board';
 import ChestsProvider from '../contexts/chests';
 
@@ -8,7 +8,7 @@ function Game() {
   return (
     <CanvasProvider>
         <ChestsProvider>               
-        <Debugger />
+        {/* <Debugger /> */}
         <Board />
       </ChestsProvider> 
     </CanvasProvider>

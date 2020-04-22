@@ -26,12 +26,22 @@ function useHeroMoviment(initialPosition) {
     }
 
     if(moviment.nextMove.dead) {
-      console.log('Você Morreu!');
+      setTimeout(() => {
+        alert('Você Morreu!');
+      })      
+      window.location.reload();
     }
 
     if(moviment.nextMove.chest) {
-      chestContext.updateOpenedChests();
-    }    
+      chestContext.updateOpenedChests(moviment.nextPosition);
+    }
+    
+    if (chestContext.totalChests === chestContext.openedChests.total && moviment.nextMove.door) {
+      setTimeout(() => {
+        alert('Você venceu!')
+      })      
+      window.location.reload();
+    }
   });
 
   return {
